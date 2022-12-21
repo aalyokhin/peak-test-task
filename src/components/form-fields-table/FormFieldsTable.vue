@@ -11,18 +11,18 @@
       <th id="table-cell-actions">Actions</th>
     </thead>
 
-    <tbody>
-      <FieldRow
-        v-for="field in formFields"
-        :key="field.id"
-        :field-data="field"
-        @delete="deleteFormFieldHandler(field.id)"
-        @update="updateFormFieldHandler"
-      />
-    </tbody>
+    <VueDraggable v-model="formFields" handle=".dnd-button" item-key="id" tag="tbody">
+      <template #item="{ element }">
+        <FieldRow
+          :field-data="element"
+          @delete="deleteFormFieldHandler(element.id)"
+          @update="updateFormFieldHandler"
+        />
+      </template>
+    </VueDraggable>
   </table>
 
-  <textarea v-model="base64string" cols="30" read-only rows="10"></textarea>
+  <textarea cols="30" read-only rows="10" :value="base64string"></textarea>
 
   <RenderFormFromBase64 :base64string="base64string" />
 </template>
@@ -30,6 +30,7 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue';
 import { encode } from 'js-base64';
+import VueDraggable from 'vuedraggable';
 import FieldRow from '@/components/form-fields-table/FieldRow.vue';
 import { getRandomId } from '@/utils';
 import { FieldType, type FormField } from '@/types/forms';
@@ -94,5 +95,9 @@ function deleteFormFieldHandler(fieldId: FormField['id']) {
   #table-cell-actions {
     width: 10%;
   }
+}
+
+.sortable-ghost {
+  opacity: 0.5;
 }
 </style>

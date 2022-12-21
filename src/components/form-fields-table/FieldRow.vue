@@ -44,7 +44,7 @@
     </template>
 
     <td>
-      <button>move</button>
+      <button class="dnd-button">move</button>
       <button @click="$emit('delete')">delete</button>
     </td>
   </tr>
