@@ -11,13 +11,13 @@ const router = createRouter({
     },
     {
       path: '/edit',
-      name: 'edit-forms',
-      component: () => import('@/pages/EditFormsPage.vue'),
+      name: 'edit-form',
+      component: () => import('@/pages/EditFormPage.vue'),
     },
     {
       path: '/render',
-      name: 'render-forms',
-      component: () => import('@/pages/RenderFormsPage.vue'),
+      name: 'render-form',
+      component: () => import('@/pages/RenderFormPage.vue'),
     },
   ],
 });

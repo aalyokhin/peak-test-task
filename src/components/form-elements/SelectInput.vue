@@ -1,5 +1,5 @@
 <template>
-  <select v-model="selectedOption" :name="fieldName">
+  <select v-model="selectedOption" class="select-input" :name="fieldName">
     <option v-for="option in options" :key="option.value" :value="option.value">
       {{ option.label }}
     </option>

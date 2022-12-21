@@ -10,7 +10,7 @@ export enum FieldType {
   Text = 'text',
 }
 
-export type FormItem =
+export type FormField =
   | {
       id: string;
       fieldId: string;

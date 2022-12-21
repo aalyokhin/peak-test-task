@@ -1,12 +1,17 @@
 <template>
-  <input v-model="isChecked" :name="fieldName" type="checkbox" />
+  <div class="checkbox-input">
+    <label v-if="hasLabel" :for="fieldId">{{ fieldName }}</label>
+    <input v-model="isChecked" :name="fieldId" type="checkbox" />
+  </div>
 </template>
 
 <script setup lang="ts">
 import { useVModel } from '@vueuse/core';
 
 const props = defineProps<{
-  fieldName: string;
+  fieldId: string;
+  fieldName?: string;
+  hasLabel?: boolean;
   modelValue: boolean;
 }>();
 

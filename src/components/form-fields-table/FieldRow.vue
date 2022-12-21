@@ -10,39 +10,36 @@
     </td>
 
     <td v-if="currentFieldData.fieldType === FieldType.Divider" colspan="4">
-      <TextInput v-model="currentFieldData.fieldId" field-name="fieldName" :type="FieldType.Text" />
+      <TextInput v-model="currentFieldData.fieldId" field-id="fieldId" :type="FieldType.Text" />
     </td>
 
     <template v-else>
       <td>
-        <TextInput v-model="currentFieldData.fieldId" field-name="fieldId" :type="FieldType.Text" />
+        <TextInput v-model="currentFieldData.fieldId" field-id="fieldId" :type="FieldType.Text" />
       </td>
 
       <td>
         <TextInput
           v-model="currentFieldData.fieldName"
-          field-name="fieldName"
+          field-id="fieldName"
           :type="FieldType.Text"
         />
       </td>
 
       <td v-if="currentFieldData.fieldType === FieldType.Checkbox">
-        <CheckboxInput
-          v-model="currentFieldData.fieldDefaultValue"
-          field-name="fieldDefaultValue"
-        />
+        <CheckboxInput v-model="currentFieldData.fieldDefaultValue" field-id="fieldDefaultValue" />
       </td>
 
       <td v-else>
         <TextInput
           v-model="currentFieldData.fieldDefaultValue"
-          field-name="fieldDefaultValue"
+          field-id="fieldDefaultValue"
           :type="currentFieldData.fieldType"
         />
       </td>
 
       <td>
-        <CheckboxInput v-model="currentFieldData.isFieldRequired" field-name="isFieldRequired" />
+        <CheckboxInput v-model="currentFieldData.isFieldRequired" field-id="isFieldRequired" />
       </td>
     </template>
 
@@ -58,16 +55,16 @@ import { ref, watchEffect } from 'vue';
 import SelectInput from '@/components/form-elements/SelectInput.vue';
 import TextInput from '@/components/form-elements/TextInput.vue';
 import CheckboxInput from '@/components/form-elements/CheckboxInput.vue';
-import { FieldType, type FormItem } from '@/types/forms';
+import { FieldType, type FormField } from '@/types/forms';
 import { fieldTypeOptions } from '@/constants/forms';
 
 const props = defineProps<{
-  fieldData: FormItem;
+  fieldData: FormField;
 }>();
 
 const emit = defineEmits(['delete', 'update']);
 
-const currentFieldData = ref<FormItem>(JSON.parse(JSON.stringify(props.fieldData)));
+const currentFieldData = ref<FormField>(JSON.parse(JSON.stringify(props.fieldData)));
 
 function fieldTypeSelectHandler(fieldType: FieldType) {
   if (fieldType === FieldType.Divider) {

@@ -1,6 +1,6 @@
 <template>
-  <div class="edit-forms-page">
-    <h2>Edit form</h2>
+  <div class="edit-form-page">
+    <h1>Edit form</h1>
 
     <FormFieldsTable />
   </div>

@@ -21,15 +21,24 @@
       />
     </tbody>
   </table>
+
+  <textarea v-model="base64string" cols="30" read-only rows="10"></textarea>
+
+  <RenderFormFromBase64 :base64string="base64string" />
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
+import { encode } from 'js-base64';
 import FieldRow from '@/components/form-fields-table/FieldRow.vue';
 import { getRandomId } from '@/utils';
-import { FieldType, type FormItem } from '@/types/forms';
+import { FieldType, type FormField } from '@/types/forms';
 
-const formFields = ref<FormItem[]>([]);
+import RenderFormFromBase64 from '@/components/RenderFormFromBase64.vue';
+
+const formFields = ref<FormField[]>([]);
+
+const base64string = computed(() => encode(JSON.stringify(formFields.value)));
 
 addFieldHandler();
 
@@ -41,7 +50,7 @@ function addFieldHandler() {
   });
 }
 
-function updateFormFieldHandler(fieldData: FormItem) {
+function updateFormFieldHandler(fieldData: FormField) {
   const itemIndex = formFields.value.findIndex(item => item.id === fieldData.id);
 
   if (itemIndex < 0) return;
@@ -49,7 +58,7 @@ function updateFormFieldHandler(fieldData: FormItem) {
   formFields.value.splice(itemIndex, 1, fieldData);
 }
 
-function deleteFormFieldHandler(fieldId: FormItem['id']) {
+function deleteFormFieldHandler(fieldId: FormField['id']) {
   const itemIndex = formFields.value.findIndex(item => item.id === fieldId);
 
   if (itemIndex < 0) return;
@@ -67,15 +76,11 @@ function deleteFormFieldHandler(fieldId: FormItem['id']) {
   }
 
   #table-cell-type {
-    width: 10%;
+    width: 100px;
   }
 
   #table-cell-id {
     width: 15%;
-  }
-
-  #table-cell-name {
-    width: 40%;
   }
 
   #table-cell-default {
