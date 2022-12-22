@@ -16,4 +16,8 @@ import NavigationHeader from '@/components/NavigationHeader.vue';
 .main-layout {
   @apply p-8;
 }
+
+.content-wrapper {
+  @apply m-auto max-w-screen-xl;
+}
 </style>

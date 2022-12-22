@@ -83,3 +83,10 @@ function submitHandler() {
   console.log('🚀 → submitHandler → formData', formData);
 }
 </script>
+
+<style lang="scss" scoped>
+.text-input,
+.checkbox-input {
+  @apply mb-4;
+}
+</style>
