@@ -1,5 +1,7 @@
 <template>
-  <form @submit.prevent="submitHandler">
+  <form ref="formRef" @submit.prevent="submitHandler">
+    <p v-if="hasParseError">Oops! Provided base64 string cannot be parsed to JSON</p>
+
     <template v-for="formField in formFields" :key="formField.id">
       <h2 v-if="formField.fieldType === FieldType.Divider">{{ formField.fieldId }}</h2>
 
@@ -23,38 +25,50 @@
       />
     </template>
 
-    <button @click="submitHandler">submit</button>
+    <button v-if="hasEditableFields" type="submit">submit</button>
   </form>
 </template>
 
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue';
-import { decode, isValid } from 'js-base64';
+import { decode } from 'js-base64';
 import CheckboxInput from '@/components/form-elements/CheckboxInput.vue';
 import TextInput from '@/components/form-elements/TextInput.vue';
 import { FieldType, type FormField } from '@/types/forms';
 
 const props = defineProps<{
   base64string: string;
+  isBase64stringValid: boolean;
 }>();
 
-const isBase64Valid = computed(() => isValid(props.base64string));
-
 const formFields = ref<FormField[]>([]);
+
+const hasParseError = ref(false);
 
 watch(
   () => props.base64string,
   () => {
     formFields.value = [];
+    hasParseError.value = false;
 
-    if (!props.base64string || !isBase64Valid.value) return;
+    if (!props.base64string || !props.isBase64stringValid) return;
 
-    formFields.value = JSON.parse(decode(props.base64string));
+    try {
+      formFields.value = JSON.parse(decode(props.base64string));
+    } catch {
+      hasParseError.value = true;
+    }
   },
   { immediate: true }
 );
 
+const hasEditableFields = computed(() => formFields.value.some(field => 'fieldValue' in field));
+
+const formRef = ref<HTMLFormElement | null>(null);
+
 function submitHandler() {
+  if (!formRef.value?.checkValidity()) return;
+
   const formData = formFields.value.reduce(
     (acc: Record<string, string | number | boolean>, field) => {
       if (field.fieldType === FieldType.Divider || field.fieldValue === null) return acc;

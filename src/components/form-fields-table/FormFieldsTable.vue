@@ -22,9 +22,13 @@
     </VueDraggable>
   </table>
 
-  <textarea cols="30" read-only rows="10" :value="base64string" />
-
-  <RenderFormFromBase64 :base64string="base64string" />
+  <TextareaInput
+    field-id="base64string"
+    field-name="Form Base64 string"
+    has-label
+    is-read-only
+    :model-value="base64string"
+  />
 </template>
 
 <script setup lang="ts">
@@ -32,13 +36,11 @@ import { ref, computed } from 'vue';
 import { encode } from 'js-base64';
 import VueDraggable from 'vuedraggable';
 import FieldRow from '@/components/form-fields-table/FieldRow.vue';
+import TextareaInput from '@/components/form-elements/TextareaInput.vue';
 import { getRandomId } from '@/utils';
 import { FieldType, type FormField } from '@/types/forms';
 
-import RenderFormFromBase64 from '@/components/RenderFormFromBase64.vue';
-
 const formFields = ref<FormField[]>([]);
-
 const base64string = computed(() => encode(JSON.stringify(formFields.value)));
 
 addFieldHandler();

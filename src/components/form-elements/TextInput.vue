@@ -2,13 +2,7 @@
   <div class="text-input">
     <label v-if="hasLabel" :for="fieldId">{{ fieldName }}</label>
 
-    <input
-      v-model="inputValue"
-      class="text-input"
-      :name="fieldId"
-      :required="isRequired"
-      :type="type"
-    />
+    <input v-model="inputValue" :name="fieldId" :required="isRequired" :type="type" />
   </div>
 </template>
 
@@ -30,7 +24,7 @@ const inputValue = useVModel(props, 'modelValue', emit);
 </script>
 
 <style lang="scss" scoped>
-.text-input {
+.text-input input {
   width: 100%;
 }
 </style>

@@ -4,7 +4,7 @@
       <SelectInput
         field-name="fieldType"
         :model-value="currentFieldData.fieldType"
-        :options="fieldTypeOptions"
+        :options="FIELD_TYPE_OPTIONS"
         @update:model-value="fieldTypeSelectHandler"
       />
     </td>
@@ -56,7 +56,7 @@ import SelectInput from '@/components/form-elements/SelectInput.vue';
 import TextInput from '@/components/form-elements/TextInput.vue';
 import CheckboxInput from '@/components/form-elements/CheckboxInput.vue';
 import { FieldType, type FormField } from '@/types/forms';
-import { fieldTypeOptions } from '@/constants/forms';
+import { FIELD_TYPE_OPTIONS } from '@/constants/forms';
 
 const props = defineProps<{
   fieldData: FormField;
