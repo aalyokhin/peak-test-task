@@ -1,5 +1,5 @@
 <template>
-  <button @click="addFieldHandler">Add new field</button>
+  <button class="mb-4" @click="addFieldHandler">Add new field</button>
 
   <table class="form-fields-table" data-testid="form-fields-table">
     <thead>
@@ -72,10 +72,16 @@ function deleteFormFieldHandler(fieldId: FormField['id']) {
 
 <style lang="scss" scoped>
 .form-fields-table {
+  margin-bottom: 25px;
   width: 100%;
 
   th {
     text-align: left;
+  }
+
+  th,
+  :deep(td) {
+    padding: 5px;
   }
 
   #table-cell-type {

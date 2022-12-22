@@ -1,6 +1,6 @@
 <template>
   <div class="checkbox-input">
-    <label v-if="hasLabel" :for="fieldId">{{ fieldName }}</label>
+    <label v-if="hasLabel" class="mr-1" :for="fieldId">{{ fieldName }}</label>
 
     <input
       :id="fieldId"

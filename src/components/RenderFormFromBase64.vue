@@ -25,7 +25,7 @@
       />
     </template>
 
-    <button v-if="hasEditableFields" type="submit">submit</button>
+    <button v-if="hasEditableFields" class="mt-4" type="submit">submit</button>
   </form>
 </template>
 

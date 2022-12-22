@@ -1,0 +1,11 @@
+button {
+  @apply rounded-md bg-green-800 text-white py-1 px-2 transition-opacity hover:opacity-75;
+}
+
+input[type="text"], input[type="number"], select, textarea {
+  @apply rounded-md border-gray-300 border-1 p-1;
+}
+
+label {
+  @apply font-semibold mb-2;
+}

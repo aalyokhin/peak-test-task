@@ -43,7 +43,7 @@
       </td>
     </template>
 
-    <td>
+    <td class="flex gap-2">
       <button class="dnd-button">move</button>
       <button @click="$emit('delete')">delete</button>
     </td>

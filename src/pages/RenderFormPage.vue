@@ -10,7 +10,11 @@
 
   <p v-if="base64string && !isBase64StringValid">Base64 string is not valid</p>
 
-  <RenderFormFromBase64 :base64string="base64string" :is-base64string-valid="isBase64StringValid" />
+  <RenderFormFromBase64
+    :base64string="base64string"
+    class="mt-4"
+    :is-base64string-valid="isBase64StringValid"
+  />
 </template>
 
 <script setup lang="ts">
