@@ -1,5 +1,5 @@
 <template>
-  <tr>
+  <tr :data-testid="fieldData.id">
     <td>
       <SelectInput
         field-name="fieldType"

@@ -3,6 +3,7 @@
     <label v-if="hasLabel" :for="fieldId">{{ fieldName }}</label>
 
     <textarea
+      :id="fieldId"
       v-model="inputValue"
       :cols="cols"
       :name="fieldId"

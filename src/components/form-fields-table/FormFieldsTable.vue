@@ -1,7 +1,7 @@
 <template>
   <button @click="addFieldHandler">Add new field</button>
 
-  <table class="form-fields-table">
+  <table class="form-fields-table" data-testid="form-fields-table">
     <thead>
       <th id="table-cell-type">Type</th>
       <th id="table-cell-id">Id</th>

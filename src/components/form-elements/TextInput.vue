@@ -2,7 +2,14 @@
   <div class="text-input">
     <label v-if="hasLabel" :for="fieldId">{{ fieldName }}</label>
 
-    <input v-model="inputValue" :name="fieldId" :required="isRequired" :type="type" />
+    <input
+      :id="fieldId"
+      v-model="inputValue"
+      :aria-label="fieldId"
+      :name="fieldId"
+      :required="isRequired"
+      :type="type"
+    />
   </div>
 </template>
 

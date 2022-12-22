@@ -3,6 +3,8 @@
     <label v-if="hasLabel" :for="fieldId">{{ fieldName }}</label>
 
     <input
+      :id="fieldId"
+      :aria-label="fieldId"
       :checked="modelValue ?? false"
       :name="fieldId"
       :required="isRequired"

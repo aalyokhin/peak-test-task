@@ -1,5 +1,5 @@
 <template>
-  <form ref="formRef" @submit.prevent="submitHandler">
+  <form ref="formRef" data-testid="render-form" @submit.prevent="submitHandler">
     <p v-if="hasParseError">Oops! Provided base64 string cannot be parsed to JSON</p>
 
     <template v-for="formField in formFields" :key="formField.id">
