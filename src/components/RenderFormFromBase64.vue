@@ -1,28 +1,34 @@
 <template>
-  <template v-for="formField in formFields" :key="formField.id">
-    <h2 v-if="formField.fieldType === FieldType.Divider">{{ formField.fieldId }}</h2>
+  <form @submit.prevent="submitHandler">
+    <template v-for="formField in formFields" :key="formField.id">
+      <h2 v-if="formField.fieldType === FieldType.Divider">{{ formField.fieldId }}</h2>
 
-    <TextInput
-      v-if="formField.fieldType === FieldType.Number || formField.fieldType === FieldType.Text"
-      :field-id="formField.fieldId"
-      :field-name="formField.fieldName"
-      has-label
-      :model-value="formField.fieldDefaultValue"
-      :type="formField.fieldType"
-    />
+      <TextInput
+        v-if="formField.fieldType === FieldType.Number || formField.fieldType === FieldType.Text"
+        v-model="formField.fieldValue"
+        :field-id="formField.fieldId"
+        :field-name="formField.fieldName"
+        has-label
+        :is-required="formField.isFieldRequired"
+        :type="formField.fieldType"
+      />
 
-    <CheckboxInput
-      v-if="formField.fieldType === FieldType.Checkbox"
-      :field-id="formField.fieldId"
-      :field-name="formField.fieldName"
-      has-label
-      :model-value="formField.fieldDefaultValue"
-    />
-  </template>
+      <CheckboxInput
+        v-if="formField.fieldType === FieldType.Checkbox"
+        v-model="formField.fieldValue"
+        :field-id="formField.fieldId"
+        :field-name="formField.fieldName"
+        has-label
+        :is-required="formField.isFieldRequired"
+      />
+    </template>
+
+    <button @click="submitHandler">submit</button>
+  </form>
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed, ref, watch } from 'vue';
 import { decode, isValid } from 'js-base64';
 import CheckboxInput from '@/components/form-elements/CheckboxInput.vue';
 import TextInput from '@/components/form-elements/TextInput.vue';
@@ -32,10 +38,34 @@ const props = defineProps<{
   base64string: string;
 }>();
 
-const formFields = computed<FormField[]>(() => {
-  if (!props.base64string) return [];
-  if (!isValid(props.base64string)) return [];
+const isBase64Valid = computed(() => isValid(props.base64string));
 
-  return JSON.parse(decode(props.base64string));
-});
+const formFields = ref<FormField[]>([]);
+
+watch(
+  () => props.base64string,
+  () => {
+    formFields.value = [];
+
+    if (!props.base64string || !isBase64Valid.value) return;
+
+    formFields.value = JSON.parse(decode(props.base64string));
+  },
+  { immediate: true }
+);
+
+function submitHandler() {
+  const formData = formFields.value.reduce(
+    (acc: Record<string, string | number | boolean>, field) => {
+      if (field.fieldType === FieldType.Divider || field.fieldValue === null) return acc;
+
+      acc[field.fieldId] = field.fieldValue;
+
+      return acc;
+    },
+    {}
+  );
+
+  console.log('🚀 → submitHandler → formData', formData);
+}
 </script>

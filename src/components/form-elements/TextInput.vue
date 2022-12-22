@@ -1,7 +1,14 @@
 <template>
   <div class="text-input">
     <label v-if="hasLabel" :for="fieldId">{{ fieldName }}</label>
-    <input v-model="inputValue" class="text-input" :name="fieldId" :type="type" />
+
+    <input
+      v-model="inputValue"
+      class="text-input"
+      :name="fieldId"
+      :required="isRequired"
+      :type="type"
+    />
   </div>
 </template>
 
@@ -12,7 +19,8 @@ const props = defineProps<{
   fieldId: string;
   fieldName?: string;
   hasLabel?: boolean;
-  modelValue: string | number;
+  isRequired?: boolean;
+  modelValue: string | number | null;
   type: 'text' | 'number';
 }>();
 

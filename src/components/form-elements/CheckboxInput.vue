@@ -1,23 +1,33 @@
 <template>
   <div class="checkbox-input">
     <label v-if="hasLabel" :for="fieldId">{{ fieldName }}</label>
-    <input v-model="isChecked" :name="fieldId" type="checkbox" />
+
+    <input
+      :checked="modelValue ?? false"
+      :name="fieldId"
+      :required="isRequired"
+      type="checkbox"
+      @input="inputHandler"
+    />
   </div>
 </template>
 
 <script setup lang="ts">
-import { useVModel } from '@vueuse/core';
-
-const props = defineProps<{
+defineProps<{
   fieldId: string;
   fieldName?: string;
   hasLabel?: boolean;
-  modelValue: boolean;
+  isRequired?: boolean;
+  modelValue: boolean | null;
 }>();
 
 const emit = defineEmits(['update:modelValue']);
 
-const isChecked = useVModel(props, 'modelValue', emit);
+function inputHandler(event: Event) {
+  const target = event.target as HTMLInputElement;
+
+  emit('update:modelValue', target.checked);
+}
 </script>
 
 <!-- <style lang="scss" scoped></style> -->

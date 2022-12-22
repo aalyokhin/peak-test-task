@@ -20,23 +20,23 @@ export type FormField =
       id: string;
       fieldId: string;
       fieldName: string;
-      isFieldRequired: boolean;
       fieldType: FieldType.Checkbox;
-      fieldDefaultValue: boolean;
+      fieldValue: boolean | null;
+      isFieldRequired: boolean;
     }
   | {
       id: string;
       fieldId: string;
       fieldName: string;
-      isFieldRequired: boolean;
       fieldType: FieldType.Text;
-      fieldDefaultValue: string;
+      fieldValue: string | null;
+      isFieldRequired: boolean;
     }
   | {
       id: string;
       fieldId: string;
       fieldName: string;
-      isFieldRequired: boolean;
       fieldType: FieldType.Number;
-      fieldDefaultValue: number;
+      fieldValue: number | null;
+      isFieldRequired: boolean;
     };

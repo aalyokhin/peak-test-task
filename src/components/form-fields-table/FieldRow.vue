@@ -27,12 +27,12 @@
       </td>
 
       <td v-if="currentFieldData.fieldType === FieldType.Checkbox">
-        <CheckboxInput v-model="currentFieldData.fieldDefaultValue" field-id="fieldDefaultValue" />
+        <CheckboxInput v-model="currentFieldData.fieldValue" field-id="fieldDefaultValue" />
       </td>
 
       <td v-else>
         <TextInput
-          v-model="currentFieldData.fieldDefaultValue"
+          v-model="currentFieldData.fieldValue"
           field-id="fieldDefaultValue"
           :type="currentFieldData.fieldType"
         />
@@ -67,30 +67,21 @@ const emit = defineEmits(['delete', 'update']);
 const currentFieldData = ref<FormField>(JSON.parse(JSON.stringify(props.fieldData)));
 
 function fieldTypeSelectHandler(fieldType: FieldType) {
-  if (fieldType === FieldType.Divider) {
-    currentFieldData.value = {
-      id: currentFieldData.value.id,
-      fieldId: currentFieldData.value.fieldId,
-      fieldType,
-    };
-  } else {
-    let fieldDefaultValue = '';
-
-    // @ts-expect-error see below
-    if (fieldType === FieldType.Checkbox) fieldDefaultValue = false;
-    // @ts-expect-error see below
-    if (fieldType === FieldType.Number) fieldDefaultValue = 0;
-
-    currentFieldData.value = {
-      id: currentFieldData.value.id,
-      fieldId: currentFieldData.value.fieldId,
-      fieldName: '',
-      isFieldRequired: false,
-      fieldType,
-      // @ts-expect-error make default value as null, to be supported in form components
-      fieldDefaultValue,
-    };
-  }
+  currentFieldData.value =
+    fieldType === FieldType.Divider
+      ? {
+          id: currentFieldData.value.id,
+          fieldId: currentFieldData.value.fieldId,
+          fieldType,
+        }
+      : {
+          id: currentFieldData.value.id,
+          fieldId: currentFieldData.value.fieldId,
+          fieldName: '',
+          fieldType,
+          fieldValue: null,
+          isFieldRequired: false,
+        };
 
   emit('update', currentFieldData.value);
 }

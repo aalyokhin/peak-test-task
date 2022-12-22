@@ -22,7 +22,7 @@
     </VueDraggable>
   </table>
 
-  <textarea cols="30" read-only rows="10" :value="base64string"></textarea>
+  <textarea cols="30" read-only rows="10" :value="base64string" />
 
   <RenderFormFromBase64 :base64string="base64string" />
 </template>
